@@ -1,0 +1,19 @@
+#!/usr/bin/env php
+<?php
+
+if(isset($_SERVER['argv']) && isset($_SERVER['argv'][1])) {
+    include('Converter.php');
+    $number = $_SERVER['argv'][1];
+    try {
+        $converter = Converter::getInstance();
+        print $converter->convert($number);
+    }catch(Exception $e) {
+        print 'ERROR: ' . $e->getMessage();
+        exit(0);
+    }
+    
+    exit(1);
+}
+
+echo 'USAGE: converter "<number>" - Number can be at most 66 characters long.';
+exit(1);
