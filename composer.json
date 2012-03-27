@@ -1,10 +1,10 @@
 {
     "name": "codingninja/adventure",
     "autoload": {
-        "psr-0": { "": "src/" }
+        "psr-0": { "Ninja\\Game\\Test": "tests", "": "src/" }
     },
     "require": {
-        "php": ">=5.3.2",
+        "php": ">=5.3.2"
     },
     "config": {
         "bin-dir": "bin"

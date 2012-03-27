@@ -1,17 +1,17 @@
 <?php
 namespace Ninja\Game\Tile;
 
-/**
- * Contract for a Tile to implement
- * 
- * A tile is an object which is capable of being placed on a map
- * 
- * @author CodingNinja
- */
-use Ninja\Game\Exception\NoStaminaException;
-
+use Ninja\Game\Exception\HasWorldException;
+use Ninja\Game\Exception\NoWorldException;
 use Ninja\Game\World;
 
+/**
+ * Contract for a Tile to implement
+ *
+ * A tile is an object which is capable of being placed on a map
+ *
+ * @author CodingNinja
+ */
 interface Tile {
 	
 	/**
@@ -25,20 +25,21 @@ interface Tile {
 	public function getY();
 	
 	/**
+	 * Bind this tile to a world
+	 * 
+	 * @param World $world
+	 * @throws HasWorldException Thrown when the tile is already bound to a world
+	 */
+	public function bindWorld(World $world);
+	
+	/**
 	 * @return World The world the tile has been bound too
-	 * @throws NoStaminaException Thrown when the tile has no world
+	 * @throws NoWorldException Thrown when the tile has no world
 	 */
 	public function getWorld();
-	
-	public function bindWorld(World $world);
-    
-    /**
-     * 
-     */
-    public function onTileEnter(Tile $tile);
-    
-    /**
-     * 
+
+	/**
+     * @param Tile The tile that is leaving this tile
      */
     public function onTileLeave(Tile $tile);
 }

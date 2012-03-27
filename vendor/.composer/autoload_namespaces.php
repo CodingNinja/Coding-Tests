@@ -5,14 +5,6 @@
 $vendorDir = dirname(__DIR__);
 
 return array(
-    'Symfony\\Component\\Yaml' => $vendorDir . '/symfony/yaml/',
-    'Symfony\\Component\\Translation' => $vendorDir . '/symfony/translation/',
-    'Symfony\\Component\\Finder' => $vendorDir . '/symfony/finder/',
-    'Symfony\\Component\\EventDispatcher' => $vendorDir . '/symfony/event-dispatcher/',
-    'Symfony\\Component\\DependencyInjection' => $vendorDir . '/symfony/dependency-injection/',
-    'Symfony\\Component\\Console' => $vendorDir . '/symfony/console/',
-    'Symfony\\Component\\Config' => $vendorDir . '/symfony/config/',
-    'Behat\\Gherkin' => $vendorDir . '/behat/gherkin/src/',
-    'Behat\\Behat' => $vendorDir . '/behat/behat/src/',
+    'Ninja\\Game\\Test' => dirname($vendorDir) . '/tests',
     '' => dirname($vendorDir) . '/src/',
 );
