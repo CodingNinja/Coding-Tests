@@ -51,16 +51,16 @@ if(file_exists($file = (getAppDir() . 'Controllers/' . $controller . '.php'))) {
                 }
         }else{  // Noez, they have tried to do something that we haven't linked to :(
             header('HTTP/1.0 401 Not Found');
-            $action = 'NotFound';
+            $action = 'NotFound.html';
         }
     }catch(Exception $e) { // Looks like something bad happened, let's fail gracefully
         header('HTTP/1.0 500 Server Error');
-        $action = 'Error';
+        $action = 'Error.html';
         $data = array('e' => $e);
     }
 }else { // No controller found
     header('HTTP/1.0 401 Not Found');
-    $action = 'NotFound';
+    $action = 'NotFound.html';
 }
 
 // Get the view content

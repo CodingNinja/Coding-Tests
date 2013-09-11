@@ -16,8 +16,10 @@
 namespace App\Controllers;
 
 use \App\Api\Flikr;
+use \App\Traits\ControllerTrait;
 
 include(dirname(__DIR__) . '/API/Flikr.php');
+include(dirname(__DIR__) . '/Traits/ControllerTrait.php');
 
 /**
  * Search Controller
@@ -30,20 +32,9 @@ include(dirname(__DIR__) . '/API/Flikr.php');
  */
 class SearchController {
 
+    use ControllerTrait;
+
     protected $api = false;
-
-    protected $request;
-
-    protected $template = false;
-
-    /**
-     * Constructor
-     *
-     * @author
-     */
-    public function __construct() {
-        $this->request = array_map('htmlentities', $_REQUEST);
-    }
 
     /**
      * Index Action
@@ -61,12 +52,13 @@ class SearchController {
      * @author CodinNinja <ninja@codingninja.com.au>
      */
     public function searchAction() {
-        $term = $this->getRequestParameter('term');
-        $page = $this->getRequestParameter('page', '1');
+        $term = $this->getAlphaNum('term');
+        $page = $this->getInt('page', '1');
+        $api = $this->getApi();
 
-        $results = $this->getApi()->setPage($page)->setSearchTerm($term);
+        $results = $api->setPage($page)->setSearchTerm($term);
 
-        $lastPage = $this->getApi()->getLastPage();
+        $lastPage = $api->getLastPage();
 
         if($this->isAjax()) {
             $this->setTemplate('search.json');
@@ -80,18 +72,6 @@ class SearchController {
             'prevPage' => max($page - 1, 1),
             'nextPage' => min($page + 1, $lastPage)
         );
-    }
-
-    public function isAjax() {
-        return isset($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'] === 'XMLHttpRequest';
-    }
-
-    public function getLayout() {
-        return $this->isAjax() ? 'Layout.ajax.php' : 'Layout.html.php';
-    }
-
-    public function getRequestParameter($key, $default = null) {
-        return isset($this->request[$key]) ? $this->request[$key] : $default;
     }
 
 	/**
@@ -121,53 +101,4 @@ class SearchController {
 
         return $this;
     }
-
-	/**
-     * Get SearchController::$request
-     *
-     * @see SearchController::$request
-     * @return mixed
-     * @author CodinNinja <ninja@codingninja.com.au>
-     */
-    public function getRequest() {
-        return $this->request;
-    }
-
-	/**
-     * Set SearchController::$request
-     *
-     * @see SearchController::$request
-     * @return SearchController Refrence to self for fluent interface
-     * @author CodinNinja <ninja@codingninja.com.au>
-     */
-    public function setRequest($request) {
-        $this->request = $request;
-
-        return $this;
-    }
-
-	/**
-     * Get SearchController::$template
-     *
-     * @see SearchController::$template
-     * @return mixed
-     * @author CodinNinja <ninja@codingninja.com.au>
-     */
-    public function getTemplate() {
-        return $this->template;
-    }
-
-	/**
-     * Set SearchController::$template
-     *
-     * @see SearchController::$template
-     * @return SearchController Refrence to self for fluent interface
-     * @author CodinNinja <ninja@codingninja.com.au>
-     */
-    public function setTemplate($template) {
-        $this->template = $template;
-
-        return $this;
-    }
-
 }

@@ -27,7 +27,6 @@ namespace App\API;
 class Flikr implements \IteratorAggregate, \Countable
 {
 
-
     /**#@+
      * State constants
      */
@@ -296,7 +295,19 @@ class Flikr implements \IteratorAggregate, \Countable
      * @param \stdClass The data to use for the URI
      * @return string A absolute URI to the image on Flikr
      */
-    public static function getUriToImage(\stdClass $data, $size = 't') {
+    public static function getUriToImage(\stdClass $data, $size = 'q') {
         return sprintf ( 'http://farm%d.static.flickr.com/%d/%s_%s_%s.jpg', $data->farm, $data->server, $data->id, $data->secret, $size );
+    }
+
+    /**
+     * Title Helper
+     *
+     * Get the ttle of a Flikr image
+     *
+     * @param \stdClass The data to use for the URI
+     * @return string A title describing the image
+     */
+    public static function getTitleToImage(\stdClass $data) {
+        return $data->title;
     }
 }
